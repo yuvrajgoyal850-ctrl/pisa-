@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paisa Gyaan – finance doubts, sorted</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2EDFF;        /* lavender paper */
+  --card:#FFFFFF;
+  --ink:#231B6B;       /* neel (indigo) */
+  --pink:#FF2E7E;      /* rani pink */
+  --gold:#FFC21A;      /* marigold */
+  --mint:#19C6A0;
+  --muted:#5E5898;
+  --shadow:4px 4px 0 var(--ink);
+  --display:"Bricolage Grotesque","Trebuchet MS",sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#15112F; --card:#221C52; --ink:#F4F0FF; --muted:#B3ACE6;
+    --shadow:4px 4px 0 #000;
+  }
+  .chip.on,.tab.on{color:#15112F}
+  .btn{color:#fff}
+  .chit.gold,.chit.pink{color:#15112F}
+  .chit.pink{color:#fff}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--body);font-size:16px;line-height:1.5;
+}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 56px}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.brand{font-family:var(--display);font-weight:800;font-size:28px;line-height:1;letter-spacing:-.02em;margin:0}
+.brand .rs{display:inline-grid;place-items:center;width:34px;height:34px;margin-right:8px;
+  background:var(--gold);color:#231B6B;border:2.5px solid var(--ink);border-radius:50%;
+  font-size:20px;box-shadow:2px 2px 0 var(--ink);vertical-align:middle}
+.tag{margin:6px 0 0;color:var(--muted);font-size:15px}
+
+.lang{display:flex;border:2.5px solid var(--ink);border-radius:999px;overflow:hidden;background:var(--card);flex:none}
+.lang button{border:0;background:transparent;padding:7px 12px;font-weight:600;font-size:14px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+.tabs{display:flex;gap:8px;margin:18px 0 16px}
+.tab{border:2.5px solid var(--ink);background:var(--card);border-radius:12px;padding:8px 16px;font-weight:600;cursor:pointer}
+.tab.on{background:var(--gold);color:#231B6B;box-shadow:2px 2px 0 var(--ink)}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{border:2px solid var(--ink);background:var(--card);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:500;cursor:pointer}
+.chip.on{background:var(--mint);color:#231B6B;font-weight:600}
+
+.ask{background:var(--card);border:2.5px solid var(--ink);border-radius:18px;box-shadow:var(--shadow);padding:12px}
+.ask textarea{width:100%;min-height:76px;resize:vertical;border:0;background:transparent;outline:0;font-size:17px}
+.ask textarea::placeholder{color:var(--muted)}
+.ask-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.count{font-size:13px;color:var(--muted)}
+.btn{border:2.5px solid var(--ink);background:var(--pink);color:#fff;border-radius:12px;padding:9px 20px;
+  font-family:var(--display);font-weight:800;font-size:17px;cursor:pointer;box-shadow:2px 2px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:none}
+.btn[disabled]{opacity:.6;cursor:wait}
+
+.try{margin:22px 0 8px;font-family:var(--display);font-weight:600;font-size:18px}
+.sugg{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.sugg button{width:100%;text-align:left;border:2px dashed var(--ink);background:transparent;border-radius:12px;padding:10px 14px;cursor:pointer}
+.sugg button:hover{background:var(--card)}
+
+.feed{display:grid;gap:22px;margin-top:24px}
+.qa{display:grid;gap:10px}
+.q{justify-self:end;max-width:88%;background:var(--ink);color:var(--bg);border-radius:16px 16px 4px 16px;padding:10px 14px;font-weight:500}
+.chit{border:2.5px solid var(--ink);border-radius:16px;padding:12px 14px;box-shadow:var(--shadow);background:var(--card);white-space:pre-wrap}
+.chit h3{margin:0 0 4px;font-family:var(--display);font-weight:800;font-size:16px}
+.chit p{margin:0}
+.chit.gold{background:var(--gold);color:#231B6B}
+.chit.pink{background:var(--pink);color:#fff}
+.chit.pink h3{font-size:15px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.save{border:2px solid var(--ink);background:var(--card);border-radius:999px;padding:5px 14px;font-size:14px;font-weight:600;cursor:pointer}
+.save[aria-pressed="true"]{background:var(--mint);color:#231B6B}
+.fu{border:2px solid var(--ink);background:transparent;border-radius:999px;padding:5px 12px;font-size:14px;cursor:pointer}
+.fu:hover{background:var(--card)}
+
+.loading{display:flex;gap:6px;align-items:center;color:var(--muted);font-weight:500}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--pink);animation:b 1s infinite ease-in-out}
+.dot:nth-child(2){animation-delay:.15s;background:var(--gold)}
+.dot:nth-child(3){animation-delay:.3s;background:var(--mint)}
+@keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-7px)}}
+@media (prefers-reduced-motion:reduce){.dot{animation:none}}
+
+.err{border:2.5px solid var(--pink);border-radius:14px;padding:12px 14px;background:var(--card)}
+.empty{border:2px dashed var(--ink);border-radius:16px;padding:22px;text-align:center;color:var(--muted)}
+.note{margin-top:28px;font-size:13px;color:var(--muted)}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1 class="brand"><span class="rs" aria-hidden="true">₹</span>Paisa Gyaan</h1>
+      <p class="tag">Finance doubts, sorted.</p>
+    </div>
+    <div class="lang" role="group" aria-label="Answer language">
+      <button id="l-hing" aria-pressed="true">Hinglish</button>
+      <button id="l-eng" aria-pressed="false">English</button>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Sections">
+    <button class="tab on" id="t-ask">Ask</button>
+    <button class="tab" id="t-saved">Saved</button>
+  </nav>
+
+  <main>
+    <section id="v-ask">
+      <div class="chips" id="chips" role="group" aria-label="Topic"></div>
+
+      <div class="ask">
+        <label for="q" class="sr" hidden>Your finance question</label>
+        <textarea id="q" maxlength="500" placeholder="Type your doubt. Example: SIP aur FD mein kya difference hai?"></textarea>
+        <div class="ask-row">
+          <span class="count" id="count">0/500</span>
+          <button class="btn" id="go">Get answer</button>
+        </div>
+      </div>
+
+      <div id="sugg-box">
+        <h2 class="try">Not sure what to ask? Try these</h2>
+        <ul class="sugg" id="sugg"></ul>
+      </div>
+
+      <div class="feed" id="feed" aria-live="polite"></div>
+    </section>
+
+    <section id="v-saved" hidden>
+      <div class="feed" id="saved"></div>
+    </section>
+  </main>
+
+  <p class="note">Paisa Gyaan is for learning, not personal investment advice. Rates and tax rules change, so confirm on official sites like rbi.org.in, sebi.gov.in and incometax.gov.in.</p>
+</div>
+
+<script>
+(function(){
+  var TOPICS = {
+    "All": [
+      "SIP kya hota hai aur kaise start karein?",
+      "What is the difference between FD and PPF?",
+      "Old vs new tax regime, kaunsa better hai?",
+      "Credit score kaise banta hai?"
+    ],
+    "Investing": [
+      "Mutual fund aur stock mein kya difference hai?",
+      "What does Nifty 50 actually mean?",
+      "Compounding ko ₹5,000/month se samjhao"
+    ],
+    "Tax": [
+      "ITR kisko file karna zaroori hai?",
+      "What is TDS and can I get it back?",
+      "80C mein kya kya aata hai?"
+    ],
+    "Banking": [
+      "UPI free kaise hai, bank ko paisa kaise milta hai?",
+      "Savings account vs current account?",
+      "What happens if I miss a credit card due date?"
+    ],
+    "Insurance": [
+      "Term insurance kya hota hai?",
+      "Health insurance ya mediclaim, difference kya hai?",
+      "What is a premium and a deductible?"
+    ],
+    "FinTech": [
+      "Payment gateway kaise kaam karta hai?",
+      "What is KYC and why does every app ask?",
+      "BNPL kya hai, kab risky hai?"
+    ],
+    "Exams": [
+      "Demand aur supply ka law simple mein samjhao",
+      "What is price elasticity of demand?",
+      "GDP aur GNP mein difference?"
+    ]
+  };
+
+  var state = { topic: "All", lang: "hinglish", busy: false };
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ---------- storage (safe if blocked) ---------- */
+  function load(){ try { return JSON.parse(localStorage.getItem("pg_saved") || "[]"); } catch(e){ return []; } }
+  function store(list){ try { localStorage.setItem("pg_saved", JSON.stringify(list)); } catch(e){} }
+  var saved = load();
+
+  /* ---------- topic chips + suggestions ---------- */
+  function renderChips(){
+    var box = $("chips"); box.innerHTML = "";
+    Object.keys(TOPICS).forEach(function(t){
+      var b = document.createElement("button");
+      b.className = "chip" + (t === state.topic ? " on" : "");
+      b.textContent = t;
+      b.setAttribute("aria-pressed", t === state.topic);
+      b.onclick = function(){ state.topic = t; renderChips(); renderSugg(); };
+      box.appendChild(b);
+    });
+  }
+  function renderSugg(){
+    var ul = $("sugg"); ul.innerHTML = "";
+    TOPICS[state.topic].forEach(function(s){
+      var li = document.createElement("li");
+      var b = document.createElement("button");
+      b.textContent = s;
+      b.onclick = function(){ ask(s); };
+      li.appendChild(b); ul.appendChild(li);
+    });
+  }
+
+  /* ---------- language toggle ---------- */
+  function setLang(l){
+    state.lang = l;
+    $("l-hing").setAttribute("aria-pressed", l === "hinglish");
+    $("l-eng").setAttribute("aria-pressed", l === "english");
+  }
+  $("l-hing").onclick = function(){ setLang("hinglish"); };
+  $("l-eng").onclick = function(){ setLang("english"); };
+
+  /* ---------- tabs ---------- */
+  function showTab(name){
+    $("v-ask").hidden = name !== "ask";
+    $("v-saved").hidden = name !== "saved";
+    $("t-ask").classList.toggle("on", name === "ask");
+    $("t-saved").classList.toggle("on", name === "saved");
+    if (name === "saved") renderSaved();
+  }
+  $("t-ask").onclick = function(){ showTab("ask"); };
+  $("t-saved").onclick = function(){ showTab("saved"); };
+
+  /* ---------- building answer cards ---------- */
+  function chit(cls, title, text){
+    var d = document.createElement("div"); d.className = "chit " + cls;
+    var h = document.createElement("h3"); h.textContent = title;
+    var p = document.createElement("p"); p.textContent = text;
+    d.appendChild(h); d.appendChild(p); return d;
+  }
+  function buildQA(item, withFollowups){
+    var wrap = document.createElement("article"); wrap.className = "qa";
+    var q = document.createElement("div"); q.className = "q"; q.textContent = item.q; wrap.appendChild(q);
+    wrap.appendChild(chit("", "Short answer", item.answer));
+    wrap.appendChild(chit("gold", "₹ Example", item.example));
+    wrap.appendChild(chit("pink", "Remember this", item.takeaway));
+
+    var row = document.createElement("div"); row.className = "actions";
+    var sv = document.createElement("button"); sv.className = "save";
+    function paint(){
+      var on = saved.some(function(s){ return s.q === item.q && s.answer === item.answer; });
+      sv.textContent = on ? "Saved" : "Save this";
+      sv.setAttribute("aria-pressed", on);
+    }
+    sv.onclick = function(){
+      var i = -1;
+      saved.forEach(function(s, n){ if (s.q === item.q && s.answer === item.answer) i = n; });
+      if (i >= 0) saved.splice(i, 1);
+      else saved.unshift({ q: item.q, answer: item.answer, example: item.example, takeaway: item.takeaway });
+      store(saved); paint();
+      if (!$("v-saved").hidden) renderSaved();
+    };
+    paint(); row.appendChild(sv);
+
+    if (withFollowups && item.followups) {
+      item.followups.forEach(function(f){
+        var b = document.createElement("button"); b.className = "fu"; b.textContent = f;
+        b.onclick = function(){ ask(f); };
+        row.appendChild(b);
+      });
+    }
+    wrap.appendChild(row);
+    return wrap;
+  }
+
+  function renderSaved(){
+    var box = $("saved"); box.innerHTML = "";
+    if (!saved.length){
+      var e = document.createElement("div"); e.className = "empty";
+      e.textContent = "Nothing saved yet. Tap “Save this” under any answer to keep it here.";
+      box.appendChild(e); return;
+    }
+    saved.forEach(function(s){ box.appendChild(buildQA(s, false)); });
+  }
+
+  /* ---------- asking ---------- */
+  function ask(text){
+    var q = (text || $("q").value).trim();
+    if (!q || state.busy) return;
+    state.busy = true; $("go").disabled = true; $("go").textContent = "Thinking…";
+    showTab("ask");
+    $("sugg-box").hidden = true;
+
+    var feed = $("feed");
+    var load = document.createElement("div"); load.className = "loading";
+    load.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span><span>Soch raha hoon…</span>';
+    feed.insertBefore(load, feed.firstChild);
+
+    fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: q, lang: state.lang, topic: state.topic === "All" ? "" : state.topic })
+    })
+    .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+    .then(function(res){
+      load.remove();
+      if (!res.ok) throw new Error(res.d && res.d.error ? res.d.error : "Something went wrong.");
+      var item = { q: q, answer: res.d.answer, example: res.d.example, takeaway: res.d.takeaway, followups: res.d.followups };
+      feed.insertBefore(buildQA(item, true), feed.firstChild);
+      $("q").value = ""; $("count").textContent = "0/500";
+    })
+    .catch(function(err){
+      load.remove();
+      var d = document.createElement("div"); d.className = "err";
+      d.textContent = (err && err.message ? err.message : "Could not reach the server.") + " Check your internet and try again.";
+      feed.insertBefore(d, feed.firstChild);
+    })
+    .then(function(){
+      state.busy = false; $("go").disabled = false; $("go").textContent = "Get answer";
+    });
+  }
+
+  $("go").onclick = function(){ ask(); };
+  $("q").addEventListener("input", function(){ $("count").textContent = this.value.length + "/500"; });
+  $("q").addEventListener("keydown", function(e){
+    if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) ask();
+  });
+
+  renderChips(); renderSugg();
+})();
+</script>
+</body>
+</html>
